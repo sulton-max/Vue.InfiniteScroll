@@ -14,7 +14,7 @@
 
             <!-- About -->
             <div class="basis-2/3">
-                <h5 class="font-medium line-clamp-1">Bujra. India Bujra. India Bujra. India Bujra</h5>
+                <h5 class="font-medium line-clamp-1">Bujra. India</h5>
                 <p class="text-textSecondary">Built in 2020</p>
                 <p class="text-textSecondary">Dec 1-6</p>
                 <h5>
