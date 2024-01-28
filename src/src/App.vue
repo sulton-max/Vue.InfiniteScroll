@@ -1,47 +1,48 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+    <!-- Content -->
+    <infinite-scroll :scroll-threshold-distance="400"
+                    :source="loadNext"
+                    :filter="filter"
+                    @on-scroll="onScroll"
+                    class="mt-[160px] grid grid-cols-1 p-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 place-items-center">
 
-  <main>
-    <TheWelcome />
-  </main>
+        <!-- Location card -->
+        <test-card v-for="i in items" :key="i" ref="contentItems"/>
+
+    </infinite-scroll>
+
 </template>
+<script setup lang="ts">
+import {onMounted, ref} from "vue";
+import {DocumentService} from "@/infrastructure/services/DocumentService";
+import InfiniteScroll from "@/common/components/InfiniteScroll.vue";
+import TestCard from "@/common/components/TestCard.vue";
 
-<style scoped>
-header {
-  line-height: 1.5;
+const documentService = new DocumentService();
+
+const minimumScrollThresholdDistance = ref<number>(0);
+const items = ref<number>(20);
+const contentItems = ref<HTMLElement[]>();
+const filter = ref<FilterPagination>({
+    pageToken: 1,
+    pageSize: 20
+});
+
+const onScroll = (filter: FilterPagination) => {
+    loadNext(filter)
+};
+
+onMounted(() => {
+    if (contentItems.value?.length > 0) {
+        // Compute minimal scroll distance if elements are loaded
+        minimumScrollThresholdDistance.value = documentService.getHeight(contentItems.value[0]);
+    }
+});
+
+const loadNext = (filter: FilterPagination) => {
+    items.value += 20;
+    console.log('Loading items for page ' + filter.pageToken);
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+</script>
