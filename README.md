@@ -151,4 +151,4 @@ const onScroll = () => {
 
 #### Result
 
-[Link to Video](result.mp4)
+<img style="width: 100%" src="./result.gif" alt="Infinite scroller result gif"/>
