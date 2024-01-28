@@ -5,7 +5,7 @@
                     :source="loadNext"
                     :filter="filter"
                     @on-scroll="onScroll"
-                    class="mt-[160px] grid grid-cols-1 p-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 place-items-center">
+                    class="grid grid-cols-1 p-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 place-items-center">
 
         <!-- Location card -->
         <test-card v-for="i in items" :key="i" ref="contentItems"/>
